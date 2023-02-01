@@ -7,32 +7,47 @@ package exercise1;
  *
  * @author dancye
  * @author Paul Bonenfant Jan 25, 2022 
+ * @author Cody Labelle Feb 1, 2023
  */
+import java.util.*;
 public class CardTrick {
     
     public static void main(String[] args) {
-        
-        Card[] hand = new Card[7];
 
+        Card[] hand = new Card[7];
+        Random rand = new Random();
+
+        // fill hand with random cards
         for (int i = 0; i < hand.length; i++) {
             Card card = new Card();
-            //card.setValue(insert call to random number generator here)
-            // 
-            //card.setSuit(Card.SUITS[insert call to random number between 0-3 here])
-            // Hint: You can use Random -> random.nextInt(n) to get a random number between 0 and n-1 (inclusive)
-            //       Don't worry about duplicates at this point
+            card.setValue(rand.nextInt(13) + 1);
+            card.setSuit(Card.SUITS[rand.nextInt(4)]);
+            hand[i] = card;
         }
 
-        // insert code to ask the user for Card value and suit, create their card
-        // and search the hand here. 
-        // Hint: You can ask for values 1 to 10, and then
-        //       11 for jack, 12 for queen, etc. (remember arrays are 0-based though)
-        //       1 for Hearts, 2 for Diamonds, etc. (remember arrays are 0-based though)
-        // 
-        // Then loop through the cards in the array to see if there's a match.
-        
-        // If the guess is successful, print System.out.println("Congratulations, you guessed right!");.
-        
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Pick a card value 1-13 (11 for Jack, 12 for Queen, 13 for King): ");
+        int value = scan.nextInt();
+        System.out.print("Pick a card suit 1-4 (1 for Hearts, 2 for Diamonds, 3 for Spades, 4 for Clubs): ");
+        int suit = scan.nextInt();
+        scan.close();
+
+        // create user's card
+        Card userCard = new Card();
+        userCard.setValue(value);
+        userCard.setSuit(Card.SUITS[suit-1]);
+
+        // search the hand for the user's card
+        for (Card card : hand) {
+            if (card.getValue()==userCard.getValue() & card.getSuit()==userCard.getSuit()) {
+                System.out.println("Congratulations, you guessed right!");
+                break;
+            }
+            else {
+                System.out.println("Sorry, your card was not in the hand.");
+                break;
+            }
+        } 
     }
 
     /**
@@ -64,4 +79,5 @@ public class CardTrick {
     
     }
 
+    
 }
